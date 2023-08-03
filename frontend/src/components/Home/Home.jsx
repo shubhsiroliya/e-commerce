@@ -29,7 +29,7 @@ const Home = () => {
         <Loader/>
       ) : (
         <Fragment>
-          <MetaData title="HOME PAGE IS WORKING" />
+          <MetaData title="Home" />
           <div className="banner">
             <p>Welcome to Ecommerce</p>
             <h1>FIND AMAZING PRODUCTS BELOW</h1>

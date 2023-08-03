@@ -65,98 +65,100 @@ function App() {
     <Router>
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
-      {isAuthenticated && stripeApiKey!=="" && <Elements stripe={loadStripe(stripeApiKey)}>
+      <div className="wrapper">
+      {isAuthenticated === true && stripeApiKey!=="" && <Elements stripe={loadStripe(stripeApiKey)}>
         <Routes>
-          <Route path="/process/payment" Component={Payment}></Route>
+         <Route path="/process/payment" element={<Payment/>} />
         </Routes>
         </Elements>}
       <Routes>
-        <Route path="/" Component={Home}></Route>
-        <Route path="/contact" Component={Contact}></Route>
-        <Route path="/about" Component={About}></Route>
-        <Route path="/product/:id" Component={ProductDetails}></Route>
-        <Route path="/products" Component={Products}></Route>
-        <Route path="/products/:keyword" Component={Products}></Route>
-        <Route path="/search" Component={Search}></Route>
-        <Route path="/login" Component={LoginSignUp}></Route>
-        <Route path="/password/forgot" Component={ForgotPassword}></Route>
-        <Route path="/user/reset/:token" Component={ResetPassword}></Route>
-        <Route path="/cart" Component={Cart}></Route>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/contact" element={<Contact/>}></Route>
+        <Route path="/about" element={<About/>}></Route>
+        <Route path="/product/:id" element={<ProductDetails/>}></Route>
+        <Route path="/products" element={<Products/>}></Route>
+        <Route path="/products/:keyword" element={<Products/>}></Route>
+        <Route path="/search" element={<Search/>}></Route>
+        <Route path="/login" element={<LoginSignUp/>}></Route>
+        <Route path="/password/forgot" element={<ForgotPassword/>}></Route>
+        <Route path="/user/reset/:token" element={<ResetPassword/>}></Route>
+        <Route path="/cart" element={<Cart/>}></Route>
 
         {/* protected routes */}
         <Route
           path="/account"
-          Component={isAuthenticated === true ? Profile : LoginSignUp}
+          element={isAuthenticated === true ? <Profile/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/me/update"
-          Component={isAuthenticated === true ? UpdateProfile : LoginSignUp}
+          element={isAuthenticated === true ? <UpdateProfile/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/password/update"
-          Component={isAuthenticated === true ? UpdatePassword : LoginSignUp}
+          element={isAuthenticated === true ? <UpdatePassword/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/shipping"
-          Component={isAuthenticated === true ? Shipping : LoginSignUp}
+          element={isAuthenticated === true ? <Shipping/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/order/confirm"
-          Component={isAuthenticated === true ? ConfirmOrder : LoginSignUp}
+          element={isAuthenticated === true ? <ConfirmOrder/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/success"
-          Component={isAuthenticated === true ? OrderSuccess : LoginSignUp}
+          element={isAuthenticated === true ? <OrderSuccess/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/orders"
-          Component={isAuthenticated === true ? MyOrders : LoginSignUp}
+          element={isAuthenticated === true ? <MyOrders/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/order/:id"
-          Component={isAuthenticated === true ? OrderDetails : LoginSignUp}
+          element={isAuthenticated === true ? <OrderDetails/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/dashboard"
-          Component={isAuthenticated === true  && user.role==="admin"? Dashboard : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <Dashboard/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/products"
-          Component={isAuthenticated === true  && user.role==="admin"? ProductList : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <ProductList/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/product"
-          Component={isAuthenticated === true  && user.role==="admin"? NewProduct : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <NewProduct/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/product/:id"
-          Component={isAuthenticated === true  && user.role==="admin"? UpdateProduct : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <UpdateProduct/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/orders"
-          Component={isAuthenticated === true  && user.role==="admin"? OrderList : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <OrderList/>: <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/order/:id"
-          Component={isAuthenticated === true  && user.role==="admin"? ProcessOrder : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <ProcessOrder/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/users"
-          Component={isAuthenticated === true  && user.role==="admin"? UserList : LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <UserList/> : <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/user/:id"
-          Component={isAuthenticated === true  && user.role==="admin"? UpdateUser: LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <UpdateUser/>: <LoginSignUp/>}
         ></Route>
         <Route
           path="/admin/reviews"
-          Component={isAuthenticated === true  && user.role==="admin"? ProductReviews: LoginSignUp}
+          element={isAuthenticated === true  && user.role==="admin"? <ProductReviews/>: <LoginSignUp/>}
         ></Route>
         <Route
           path="*"
-          Component={NotFound}
+          element={NotFound}
         ></Route>
       </Routes>
+      </div>
       <Footer />
     </Router>
   );

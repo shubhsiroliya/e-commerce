@@ -6,16 +6,14 @@ import Loader from "../layouts/Loader/Loader";
 import ProductCard from "../Home/ProductCard";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
-import Slider from "@material-ui/core/Slider";
+import {Slider} from "@mui/material";
 import Typography from "@material-ui/core/Typography";
-import {useAlert} from 'react-alert';
-import MetaData from '../layouts/MetaData';
+import { useAlert } from "react-alert";
+import MetaData from "../layouts/MetaData";
 
 const categories = [
   "Laptop",
   "Footwear",
-  "Bottom",
-  "Tops",
   "Attire",
   "Camera",
   "SmartPhones",
@@ -23,38 +21,33 @@ const categories = [
 
 const Products = () => {
   const dispatch = useDispatch();
-  const alert=useAlert();
+  const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [price, setPrice] = useState([0, 250000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
 
-  const {
-    products,
-    loading,
-    error,
-    resultPerPage,
-    filteredProductsCount,
-  } = useSelector((state) => state.products);
+  const { products, loading, error, resultPerPage, filteredProductsCount } =
+    useSelector((state) => state.products);
 
   const { keyword } = useParams();
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
   };
-  const priceHandler = (event, newPrice) => {
-    setPrice(newPrice);
+  const priceHandler = (event, value) => {
+    console.log(value);
+    setPrice(value);
   };
 
   useEffect(() => {
-    if(error)
-    {
+    if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getProduct(keyword, currentPage, price, category,ratings));
-  }, [dispatch, keyword, currentPage, price, category,ratings,alert,error]);
+    dispatch(getProduct(keyword, currentPage, price, category, ratings));
+  }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);
 
   let count = filteredProductsCount;
   return (
@@ -63,7 +56,7 @@ const Products = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="PRODUCTS--ECOMMERCE"/>
+          <MetaData title="Products" />
           <h2 className="productsHeading">Products</h2>
           <div className="products">
             {products &&
@@ -75,13 +68,15 @@ const Products = () => {
           <div className="filterBox">
             <Typography>Price</Typography>
             <Slider
+              getAriaLabel={() => "Minimum distance shift"}
               value={price}
               onChange={priceHandler}
-              valueLabelDisplay="on"
-              aria-labelledby="range-slider"
+              valueLabelDisplay="auto"
+              disableSwap
               min={0}
-              max={25000}
+              max={250000}
             />
+            
             <Typography>Categories</Typography>
             <ul className="categoryBox">
               {categories.map((category) => (
@@ -95,17 +90,17 @@ const Products = () => {
               ))}
             </ul>
             <fieldset>
-                <Typography component="legend">Ratings Above</Typography>
-                <Slider
-                     value={ratings}
-                     onChange={(e,newRatings)=>{
-                        setRatings(newRatings);
-                     }}  
-                     aria-labelledby="continous-slider"  
-                     min={0}                       
-                     max={5}
-                     valueLabelDisplay="auto"
-                />
+              <Typography component="legend">Ratings Above</Typography>
+              <Slider
+                value={ratings}
+                onChange={(e, newRatings) => {
+                  setRatings(newRatings);
+                }}
+                aria-labelledby="continous-slider"
+                min={0}
+                max={5}
+                valueLabelDisplay="auto"
+              />
             </fieldset>
           </div>
 
